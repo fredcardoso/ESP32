@@ -2,17 +2,15 @@ const char pantilt_htm[] PROGMEM = R"rawliteral(
 <!DOCTYPE html>
 <html>
 <head>
-  <meta name="viewport"
-        content="width=device-width,
-        initial-scale=1.0,
-        user-scalable=no"/>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <title>Pan tilt servos</title>
   <style>
     #container {
       width: 400px;
       height: 400px;
-      background-color: #333;
+      background-color: #222;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -21,6 +19,7 @@ const char pantilt_htm[] PROGMEM = R"rawliteral(
       touch-action: none;
     }
     #item {
+      margin-top:150px;
       width: 100px;
       height: 100px;
       background-color: rgb(99, 245, 210);
@@ -55,14 +54,12 @@ const char pantilt_htm[] PROGMEM = R"rawliteral(
     var initialY;
     var servoXInit = 90;
     var servoYInit = 150;
-    var servoPosX = 90;
-    var servoPosY = 150;
     var tempX = 90;
     var tempY = 150;
     var xOffset = 0;
     var yOffset = 0;
-    w = $('#container').width();
-    h = $('#container').height();
+    w = $('#container').width()-50;
+    h = $('#container').height()-50;
 
     container.addEventListener("touchstart", dragStart, false);
     container.addEventListener("touchend", dragEnd, false);
@@ -89,7 +86,6 @@ const char pantilt_htm[] PROGMEM = R"rawliteral(
       initialX = currentX;
       initialY = currentY;
       active = false;
-      moveServos(currentX, currentY);
     }
 
     function drag(e) {
@@ -106,21 +102,22 @@ const char pantilt_htm[] PROGMEM = R"rawliteral(
         xOffset = currentX;
         yOffset = currentY;
         setTranslate(currentX, currentY, dragItem);
+        moveServos(currentX, currentY);
       }
     }
 
-    function setTranslate(xPos, yPos, el) {
+    function setTranslate(xPos, yPos, el) {  // Desenha o controle na nova posição
       el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
     }
 
     function moveServos(xPos, yPos){   
       xPo = servoXInit-180*xPos/w;
-      yPo = servoYInit+100*yPos/h;
+      yPo = servoYInit+180*yPos/h;
 
-      if (xPo > 150) {xPo = 150}
-      if (xPo < 30) {xPo = 30}
+      if (xPo > 170) {xPo = 170} // Limites para X e Y
+      if (xPo < 10) {xPo = 10}
       if (yPo > 170) {yPo = 170}
-      if (yPo < 60) {yPo = 60}
+      if (yPo < 10) {yPo = 10}
 
       servo(xPo, yPo);
     }
@@ -128,7 +125,7 @@ const char pantilt_htm[] PROGMEM = R"rawliteral(
     $.ajaxSetup({timeout:1000});
     function servo(xP, yP) {
       $.get("/?value="+Math.round(xP)+","+Math.round(yP));
-    }
+    }  
 </script>
 </body>
 </html>)rawliteral";
