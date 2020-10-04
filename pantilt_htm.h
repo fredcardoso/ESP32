@@ -20,7 +20,6 @@ const char pantilt_htm[] PROGMEM = R"rawliteral(
       }
 
       #item {
-        margin-top: 150px;
         width: 100px;
         height: 100px;
         background-color: rgb(99, 245, 210);
@@ -44,7 +43,6 @@ const char pantilt_htm[] PROGMEM = R"rawliteral(
          text-align:center;
          width:100px;
       }
-
     </style>
   </head>
 
@@ -56,7 +54,7 @@ const char pantilt_htm[] PROGMEM = R"rawliteral(
       </div>
     </div>
     <div align="center">
-      <input type='textarea' id='info' disabled />
+      <input type='textarea' id='info' value="X: 90º | Y: 90º" disabled />
     </div>
     
     <script>
@@ -68,9 +66,9 @@ const char pantilt_htm[] PROGMEM = R"rawliteral(
       var initialX;
       var initialY;
       var servoXInit = 90;
-      var servoYInit = 150;
+      var servoYInit = 90;
       var tempX = 90;
-      var tempY = 150;
+      var tempY = 90;
       var xOffset = 0;
       var yOffset = 0;
       w = $('#container').width() - 50;
