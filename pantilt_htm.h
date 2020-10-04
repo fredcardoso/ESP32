@@ -39,10 +39,11 @@ const char pantilt_htm[] PROGMEM = R"rawliteral(
       }
 
       #info {
-         margin-top:5px;
-         text-align:center;
-         width:100px;
+        margin-top: 5px;
+        text-align: center;
+        width: 100px;
       }
+
     </style>
   </head>
 
@@ -56,7 +57,6 @@ const char pantilt_htm[] PROGMEM = R"rawliteral(
     <div align="center">
       <input type='textarea' id='info' value="X: 90º | Y: 90º" disabled />
     </div>
-    
     <script>
       var dragItem = document.querySelector("#item");
       var container = document.querySelector("#container");
@@ -65,6 +65,7 @@ const char pantilt_htm[] PROGMEM = R"rawliteral(
       var currentY = 0;
       var initialX;
       var initialY;
+      var counter = 0;
       var servoXInit = 90;
       var servoYInit = 90;
       var tempX = 90;
@@ -147,11 +148,16 @@ const char pantilt_htm[] PROGMEM = R"rawliteral(
       $.ajaxSetup({
         timeout: 1000
       });
-
+ 
       function servo(xP, yP) {
-        $.get("/?value=" + xP + "," + yP);
+        if (counter == 0) {
+          $.get("/?value=" + xP + "," + yP);
+          counter += 1;
+        setTimeout(function() {
+          counter = 0;
+        }, 200);
       }
+      }       
     </script>
-    
   </body>
 </html>)rawliteral";
